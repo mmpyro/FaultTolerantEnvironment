@@ -41,6 +41,14 @@ resource "azurerm_eventhub_consumer_group" "consumerGroupFunctionTwin" {
   resource_group_name = "${azurerm_resource_group.hubsRG.name}"
 }
 
+resource "azurerm_eventhub_consumer_group" "consumerGroupCircutBreaker" {
+  name                = "circut-breaker"
+  namespace_name      = "${azurerm_eventhub_namespace.hubNamespace.name}"
+  eventhub_name       = "${azurerm_eventhub.eventHub.name}"
+  resource_group_name = "${azurerm_resource_group.hubsRG.name}"
+}
+
+
 resource "azurerm_eventhub_authorization_rule" "eventHubAuthorizationRule" {
   name                = "iothub"
   namespace_name      = "${azurerm_eventhub_namespace.hubNamespace.name}"

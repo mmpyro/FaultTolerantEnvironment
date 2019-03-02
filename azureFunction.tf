@@ -47,3 +47,11 @@ resource "azurerm_function_app" "function-twin" {
   app_service_plan_id       = "${azurerm_app_service_plan.servicePlan.id}"
   storage_connection_string = "${azurerm_storage_account.functionStorage.primary_connection_string}"
 }
+
+resource "azurerm_function_app" "circut-breaker-function-app" {
+  name                      = "snapshot-manager-circut-breaker"
+  location                  = "${azurerm_resource_group.functionRG.location}"
+  resource_group_name       = "${azurerm_resource_group.functionRG.name}"
+  app_service_plan_id       = "${azurerm_app_service_plan.servicePlan.id}"
+  storage_connection_string = "${azurerm_storage_account.functionStorage.primary_connection_string}"
+}
