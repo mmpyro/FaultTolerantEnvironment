@@ -1,16 +1,16 @@
 resource "azurerm_resource_group" "circutBreakerRG" {
-  name     = "dev-circutbreaker-weuro"
+  name     = "${var.circut_breaker_resource_group_name}"
   location = "${var.location}"
 }
 
 resource "azurerm_eventgrid_topic" "circutBreakerTopic" {
-  name                = "circutBreaker-eventgrid"
+  name                = "${var.event_grid_name}"
   location            = "${azurerm_resource_group.circutBreakerRG.location}"
   resource_group_name = "${azurerm_resource_group.circutBreakerRG.name}"
 }
 
 resource "azurerm_redis_cache" "redis" {
-  name                = "vehicle-cache"
+  name                = "${var.cache_name}"
   location            = "${azurerm_resource_group.circutBreakerRG.location}"
   resource_group_name = "${azurerm_resource_group.circutBreakerRG.name}"
   capacity            = 0

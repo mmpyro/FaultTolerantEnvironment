@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "functionRG" {
-  name     = "dev-af-weuro"
+  name     = "${var.af_resource_group_name}"
   location = "${var.location}"
 }
 
@@ -12,7 +12,7 @@ resource "azurerm_storage_account" "functionStorage" {
 }
 
 resource "azurerm_app_service_plan" "servicePlan" {
-  name                = "azure-functions-dynamic-service-plan"
+  name                = "${var.service_plan_name}"
   location            = "${azurerm_resource_group.functionRG.location}"
   resource_group_name = "${azurerm_resource_group.functionRG.name}"
   kind                = "FunctionApp"
@@ -29,6 +29,7 @@ resource "azurerm_function_app" "without-error-handling-function-app" {
   resource_group_name       = "${azurerm_resource_group.functionRG.name}"
   app_service_plan_id       = "${azurerm_app_service_plan.servicePlan.id}"
   storage_connection_string = "${azurerm_storage_account.functionStorage.primary_connection_string}"
+  version = "${var.function_extension_version}"
 }
 
 resource "azurerm_function_app" "polly-function-app" {
@@ -37,8 +38,8 @@ resource "azurerm_function_app" "polly-function-app" {
   resource_group_name       = "${azurerm_resource_group.functionRG.name}"
   app_service_plan_id       = "${azurerm_app_service_plan.servicePlan.id}"
   storage_connection_string = "${azurerm_storage_account.functionStorage.primary_connection_string}"
+  version = "${var.function_extension_version}"
 }
-
 
 resource "azurerm_function_app" "function-twin" {
   name                      = "snapshot-manager-function-twin"
@@ -46,6 +47,7 @@ resource "azurerm_function_app" "function-twin" {
   resource_group_name       = "${azurerm_resource_group.functionRG.name}"
   app_service_plan_id       = "${azurerm_app_service_plan.servicePlan.id}"
   storage_connection_string = "${azurerm_storage_account.functionStorage.primary_connection_string}"
+  version = "${var.function_extension_version}"
 }
 
 resource "azurerm_function_app" "circut-breaker-function-app" {
@@ -54,4 +56,5 @@ resource "azurerm_function_app" "circut-breaker-function-app" {
   resource_group_name       = "${azurerm_resource_group.functionRG.name}"
   app_service_plan_id       = "${azurerm_app_service_plan.servicePlan.id}"
   storage_connection_string = "${azurerm_storage_account.functionStorage.primary_connection_string}"
+  version = "${var.function_extension_version}"
 }

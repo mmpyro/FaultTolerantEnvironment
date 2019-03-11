@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "storageRG" {
-  name     = "dev-storage-weuro"
+  name     = "${var.storage_resource_group_name}"
   location = "${var.location}"
 }
 
@@ -17,7 +17,7 @@ resource "azurerm_storage_account" "poissonStorage" {
 }
 
 resource "azurerm_cosmosdb_account" "db" {
-  name                = "mmvehicle"
+  name                = "${var.db_name}"
   location            = "${azurerm_resource_group.storageRG.location}"
   resource_group_name = "${azurerm_resource_group.storageRG.name}"
   offer_type          = "Standard"

@@ -1,10 +1,10 @@
 resource "azurerm_resource_group" "hubsRG" {
-  name     = "dev-hubs-weuro"
+  name     = "${var.hubs_resource_group_name}"
   location = "${var.location}"
 }
 
 resource "azurerm_eventhub_namespace" "hubNamespace" {
-  name                = "mmVehicleEventHubNamespace"
+  name                = "${var.event_hub_namespace_name}"
   location            = "${azurerm_resource_group.hubsRG.location}"
   resource_group_name = "${azurerm_resource_group.hubsRG.name}"
   sku                 = "Standard"
@@ -70,7 +70,7 @@ resource "azurerm_eventhub_authorization_rule" "eventHubSnapshotManagerSendPolic
 }
 
 resource "azurerm_iothub" "iotHub" {
-  name                = "mmvehiclehub"
+  name                = "${var.iot_hub_name}"
   resource_group_name = "${azurerm_resource_group.hubsRG.name}"
   location            = "${azurerm_resource_group.hubsRG.location}"
 
